@@ -19,3 +19,13 @@ cache_dir=$(cd $2 && pwd)
 env_dir=$(cd $3 && pwd)
 heroku_dir=$build_dir/.heroku
 
+aws s3 cp "${S3_RELEASES_ROOT}/half_dome/CURRENT_APP_VERSION" /tmp/CURRENT_APP_VERSION
+app_version=`cat /tmp/CURRENT_APP_VERSION`
+aws s3 cp "${S3_RELEASES_ROOT}/half_dome/${app_version}/unix_linux/half_dome.tar.gz" /tmp
+
+# junk is temporarily here:
+cd $build_dir
+mkdir junk
+cd junk
+
+tar xf /tmp/half_dome.tar.gz
