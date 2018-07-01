@@ -21,54 +21,24 @@ heroku_dir=$build_dir/.heroku
 source ${build_pack_dir}/lib/misc_funcs.sh
 
 export_env_dir $env_dir
+download_aws_cli $build_dir $cache_dir $build_pack_dir
+create_aws_credentials
 
-# =================================
-#AWS_CLI_URL="https://s3.amazonaws.com/aws-cli/awscli-bundle.zip"
+#AWS_INSTALL_DIR=$build_dir/vendor/awscli
+#chmod +x $build_dir/vendor/awscli-bundle/install
+#$build_dir/vendor/awscli-bundle/install -i $AWS_INSTALL_DIR
+#chmod u+x $AWS_INSTALL_DIR/bin/aws
 #
-#echo "-----> Fetching AWS CLI into slug"
-#curl --progress-bar -o /tmp/awscli-bundle.zip $AWS_CLI_URL
-#unzip -qq -d "$build_dir/vendor" /tmp/awscli-bundle.zip
+#echo " ????????????????????????????????????????????????????????????????????????"
 #
-#echo "-----> adding installer script into app/.profile.d"
-#mkdir -p $build_dir/.profile.d
-#cp "$build_pack_dir/bin/install_awscli.sh" $build_dir/.profile.d/
-#chmod +x $build_dir/.profile.d/install_awscli.sh
-$build_dir/.profile.d/install_awscli.sh
-# =================================
-
-echo " ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
-echo "Profile dir contents:"
-echo `ls $build_dir/.profile.d`
-echo "vendor dir contents:"
-echo `ls $build_dir/vendor`
-
-AWS_INSTALL_DIR=$build_dir/vendor/awscli
-chmod +x $build_dir/vendor/awscli-bundle/install
-$build_dir/vendor/awscli-bundle/install -i $AWS_INSTALL_DIR
-chmod u+x $AWS_INSTALL_DIR/bin/aws
-
-echo " ????????????????????????????????????????????????????????????????????????"
-
-aws=$AWS_INSTALL_DIR/bin/aws
+#aws=$AWS_INSTALL_DIR/bin/aws
 #
-#echo "aws: ${aws}"
+echo "aws: ${aws}"
 #echo "S3_RELEASES_ROOT: ${S3_RELEASES_ROOT}"
 #S3_RELEASES_ROOT="s3://sparta-science"
 #
 #
 #
-#mkdir ~/.aws
-#
-#cat >> ~/.aws/credentials << EOF
-#[default]
-#aws_access_key_id = $AWS_KEY
-#aws_secret_access_key = $AWS_SECRET_KEY
-#EOF
-#
-#cat >> ~/.aws/config << EOF
-#[default]
-#region = $AWS_REGION
-#EOF
 
 echo "AWS_KEY: ${AWS_KEY}"
 echo "AWS_REGION: ${AWS_REGION}"
