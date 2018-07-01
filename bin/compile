@@ -32,7 +32,7 @@ export_env_dir() {
   fi
 }
 
-export_env_dir
+export_env_dir $env_dir
 
 # =================================
 #AWS_CLI_URL="https://s3.amazonaws.com/aws-cli/awscli-bundle.zip"
