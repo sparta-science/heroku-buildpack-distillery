@@ -23,7 +23,9 @@ source ${build_pack_dir}/lib/functions.sh
 distillery_app_name=half_dome
 s3_releases_root=s3://sparta-science
 
+# Get AWS_KEY, AWS_SECRET_KEY, and AWS_REGION from Heroku environment:
 export_env_dir $env_dir
+
 download_aws_cli $build_dir
 create_aws_credentials $AWS_KEY $AWS_SECRET_KEY $AWS_REGION
 download_distillery_release_from_s3 $distillery_app_name $s3_releases_root
