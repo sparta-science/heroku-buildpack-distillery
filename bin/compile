@@ -20,10 +20,13 @@ heroku_dir=$build_dir/.heroku
 
 source ${build_pack_dir}/lib/misc_funcs.sh
 
+distillery_app_name=half_dome
+
 export_env_dir $env_dir
 download_aws_cli $build_dir $cache_dir $build_pack_dir
 create_aws_credentials
-download_distillery_release_from_s3
+download_distillery_release_from_s3 $distillery_app_name
+untar_distillery_release $distillery_app_name $build_dir
 
 #AWS_INSTALL_DIR=$build_dir/vendor/awscli
 #chmod +x $build_dir/vendor/awscli-bundle/install
@@ -34,15 +37,13 @@ download_distillery_release_from_s3
 #
 #aws=$AWS_INSTALL_DIR/bin/aws
 #
-echo "aws: ${aws}"
+#echo "aws: ${aws}"
 #echo "S3_RELEASES_ROOT: ${S3_RELEASES_ROOT}"
 #S3_RELEASES_ROOT="s3://sparta-science"
 #
 #
 #
 
-echo "AWS_KEY: ${AWS_KEY}"
-echo "AWS_REGION: ${AWS_REGION}"
 
 
 #$aws s3 cp "${S3_RELEASES_ROOT}/half_dome/CURRENT_APP_VERSION" /tmp/CURRENT_APP_VERSION
@@ -54,8 +55,8 @@ echo "AWS_REGION: ${AWS_REGION}"
 #echo "successfully downloaded tarball"
 
 # junk is temporarily here:
-cd $build_dir
-mkdir junk
-cd junk
-
-tar xf /tmp/half_dome.tar.gz
+#cd $build_dir
+#mkdir junk
+#cd junk
+#
+#tar xf /tmp/half_dome.tar.gz

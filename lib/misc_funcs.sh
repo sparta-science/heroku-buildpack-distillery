@@ -12,12 +12,11 @@ export_env_dir() {
 }
 
 download_aws_cli() {
-  AWS_CLI_URL="https://s3.amazonaws.com/aws-cli/awscli-bundle.zip"
-
-  # parse and derive params
   BUILD_DIR=$1
   CACHE_DIR=$2
   BUILDPACK_DIR=$3
+
+  AWS_CLI_URL="https://s3.amazonaws.com/aws-cli/awscli-bundle.zip"
 
   echo "-----> Fetching AWS CLI into slug"
   curl --progress-bar -o /tmp/awscli-bundle.zip $AWS_CLI_URL
@@ -35,10 +34,10 @@ download_aws_cli() {
 
   export aws=$AWS_INSTALL_DIR/bin/aws
 
-  #cleaning up...
+  # cleaning up...
   rm -rf /tmp/awscli*
 
-  echo "-----> aws cli installation done"
+  echo "-----> AWS CLI installation completed"
 }
 
 create_aws_credentials() {
@@ -59,11 +58,25 @@ EOF
 }
 
 download_distillery_release_from_s3() {
-  $aws s3 cp "${S3_RELEASES_ROOT}/half_dome/CURRENT_APP_VERSION" /tmp/CURRENT_APP_VERSION
+  distillery_app_name=$1
+
+  $aws s3 cp "${S3_RELEASES_ROOT}/${distillery_app_name}/CURRENT_APP_VERSION" /tmp/CURRENT_APP_VERSION
   app_version=`cat /tmp/CURRENT_APP_VERSION`
 
   echo "app_version: ${app_version}"
-  $aws s3 cp "${S3_RELEASES_ROOT}/half_dome/${app_version}/unix_linux/half_dome.tar.gz" /tmp
+  $aws s3 cp "${S3_RELEASES_ROOT}/${distillery_app_name}/${app_version}/unix_linux/${distillery_app_name}.tar.gz" /tmp
 
   echo "successfully downloaded tarball"
+}
+
+untar_distillery_release() {
+  distillery_app_name=$1
+  build_dir=$2
+
+  cd $build_dir
+  # junk is temporarily here:
+  mkdir junk
+  cd junk
+
+  tar xf /tmp/${distillery_app_name}.tar.gz
 }
