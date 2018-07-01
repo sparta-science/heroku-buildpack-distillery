@@ -59,12 +59,13 @@ EOF
 
 download_distillery_release_from_s3() {
   distillery_app_name=$1
+  s3_releases_root=$2
 
-  $aws s3 cp "${S3_RELEASES_ROOT}/${distillery_app_name}/CURRENT_APP_VERSION" /tmp/CURRENT_APP_VERSION
+  $aws s3 cp "${s3_releases_root}/${distillery_app_name}/CURRENT_APP_VERSION" /tmp/CURRENT_APP_VERSION
   app_version=`cat /tmp/CURRENT_APP_VERSION`
 
   echo "app_version: ${app_version}"
-  $aws s3 cp "${S3_RELEASES_ROOT}/${distillery_app_name}/${app_version}/unix_linux/${distillery_app_name}.tar.gz" /tmp
+  $aws s3 cp "${s3_releases_root}/${distillery_app_name}/${app_version}/unix_linux/${distillery_app_name}.tar.gz" /tmp
 
   echo "successfully downloaded tarball"
 }

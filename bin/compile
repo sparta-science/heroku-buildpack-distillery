@@ -21,11 +21,12 @@ heroku_dir=$build_dir/.heroku
 source ${build_pack_dir}/lib/misc_funcs.sh
 
 distillery_app_name=half_dome
+s3_releases_root=s3://sparta-science
 
 export_env_dir $env_dir
 download_aws_cli $build_dir $cache_dir $build_pack_dir
 create_aws_credentials
-download_distillery_release_from_s3 $distillery_app_name
+download_distillery_release_from_s3 $distillery_app_name $s3_releases_root
 untar_distillery_release $distillery_app_name $build_dir
 
 #AWS_INSTALL_DIR=$build_dir/vendor/awscli
