@@ -12,6 +12,30 @@ export_env_dir() {
   fi
 }
 
+function load_config() {
+  build_dir=$1
+  build_pack_dir=$2
+
+  echo "-----> Checking Distillery app name and S3 root ..."
+
+  local custom_config_file="${build_dir}/distillery_buildpack.config"
+
+  # Source for default versions file from buildpack first
+  source "${build_pack_dir}/distillery_buildpack.config"
+
+  if [ -f $custom_config_file ];
+  then
+    source $custom_config_file
+  else
+    echo "-----> WARNING: distillery_buildpack.config wasn't found in the app"
+    echo "-----> Using default config from distillery buildpack"
+  fi
+
+  echo "-----> Will use the following versions:"
+  echo "----->   * distillery_app_name ${distillery_app_name}"
+  echo "----->   * s3_releases_root ${s3_releases_root}"
+}
+
 download_aws_cli() {
   build_dir=$1
 
