@@ -54,14 +54,14 @@ echo `ls $build_dir/.profile.d`
 echo "vendor dir contents:"
 echo `ls $build_dir/vendor`
 
-#AWS_INSTALL_DIR=$build_dir/vendor/awscli
-#chmod +x $build_dir/vendor/awscli-bundle/install
-#$build_dir/vendor/awscli-bundle/install -i $AWS_INSTALL_DIR
-#chmod u+x $AWS_INSTALL_DIR/bin/aws
+AWS_INSTALL_DIR=$build_dir/vendor/awscli
+chmod +x $build_dir/vendor/awscli-bundle/install
+$build_dir/vendor/awscli-bundle/install -i $AWS_INSTALL_DIR
+chmod u+x $AWS_INSTALL_DIR/bin/aws
 
 echo " ????????????????????????????????????????????????????????????????????????"
 
-#aws=$AWS_INSTALL_DIR/bin/aws
+aws=$AWS_INSTALL_DIR/bin/aws
 #
 #echo "aws: ${aws}"
 #echo "S3_RELEASES_ROOT: ${S3_RELEASES_ROOT}"
@@ -87,11 +87,11 @@ echo "AWS_REGION: ${AWS_REGION}"
 echo `printenv`
 
 
-aws s3 cp "${S3_RELEASES_ROOT}/half_dome/CURRENT_APP_VERSION" /tmp/CURRENT_APP_VERSION
+$aws s3 cp "${S3_RELEASES_ROOT}/half_dome/CURRENT_APP_VERSION" /tmp/CURRENT_APP_VERSION
 app_version=`cat /tmp/CURRENT_APP_VERSION`
 
 echo "app_version: ${app_version}"
-aws s3 cp "${S3_RELEASES_ROOT}/half_dome/${app_version}/unix_linux/half_dome.tar.gz" /tmp
+$aws s3 cp "${S3_RELEASES_ROOT}/half_dome/${app_version}/unix_linux/half_dome.tar.gz" /tmp
 
 echo "successfully downloaded tarball"
 
