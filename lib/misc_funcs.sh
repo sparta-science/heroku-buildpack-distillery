@@ -57,3 +57,13 @@ EOF
   echo "-----> AWS credentials created"
 
 }
+
+download_distillery_release_from_s3() {
+  $aws s3 cp "${S3_RELEASES_ROOT}/half_dome/CURRENT_APP_VERSION" /tmp/CURRENT_APP_VERSION
+  app_version=`cat /tmp/CURRENT_APP_VERSION`
+
+  echo "app_version: ${app_version}"
+  $aws s3 cp "${S3_RELEASES_ROOT}/half_dome/${app_version}/unix_linux/half_dome.tar.gz" /tmp
+
+  echo "successfully downloaded tarball"
+}
