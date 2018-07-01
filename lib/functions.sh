@@ -37,6 +37,7 @@ function load_config() {
 }
 
 download_aws_cli() {
+  # Perhaps try this to create a signed URL instead of using the AWS CLI?  https://github.com/paulhammond/s3-tarball-buildpack
   build_dir=$1
 
   AWS_INSTALL_DIR=$build_dir/vendor/awscli
