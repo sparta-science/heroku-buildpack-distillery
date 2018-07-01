@@ -51,6 +51,23 @@ echo "aws: ${aws}"
 echo "S3_RELEASES_ROOT: ${S3_RELEASES_ROOT}"
 S3_RELEASES_ROOT="s3://sparta-science"
 
+
+
+mkdir ~/.aws
+
+cat >> ~/.aws/credentials << EOF
+[default]
+aws_access_key_id = $AWS_KEY
+aws_secret_access_key = $AWS_SECRET_KEY
+EOF
+
+cat >> ~/.aws/config << EOF
+[default]
+region = $AWS_REGION
+EOF
+
+
+
 $aws s3 cp "${S3_RELEASES_ROOT}/half_dome/CURRENT_APP_VERSION" /tmp/CURRENT_APP_VERSION
 app_version=`cat /tmp/CURRENT_APP_VERSION`
 
