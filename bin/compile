@@ -19,11 +19,23 @@ cache_dir=$(cd $2 && pwd)
 env_dir=$(cd $3 && pwd)
 heroku_dir=$build_dir/.heroku
 
-#$build_dir/.profile.d/install_awscli.sh
+# =================================
+AWS_CLI_URL="https://s3.amazonaws.com/aws-cli/awscli-bundle.zip"
 
-$build_dir/vendor/awscli/bin/aws s3 cp "${S3_RELEASES_ROOT}/half_dome/CURRENT_APP_VERSION" /tmp/CURRENT_APP_VERSION
+echo "-----> Fetching AWS CLI into slug"
+curl --progress-bar -o /tmp/awscli-bundle.zip $AWS_CLI_URL
+unzip -qq -d "$BUILD_DIR/vendor" /tmp/awscli-bundle.zip
+
+echo "-----> adding installer script into app/.profile.d"
+mkdir -p $BUILD_DIR/.profile.d
+cp "$BUILDPACK_DIR/bin/install_awscli.sh" $BUILD_DIR/.profile.d/
+chmod +x $BUILD_DIR/.profile.d/install_awscli.sh
+# =================================
+
+
+aws s3 cp "${S3_RELEASES_ROOT}/half_dome/CURRENT_APP_VERSION" /tmp/CURRENT_APP_VERSION
 app_version=`cat /tmp/CURRENT_APP_VERSION`
-$build_dir/vendor/awscli/bin/aws s3 cp "${S3_RELEASES_ROOT}/half_dome/${app_version}/unix_linux/half_dome.tar.gz" /tmp
+aws s3 cp "${S3_RELEASES_ROOT}/half_dome/${app_version}/unix_linux/half_dome.tar.gz" /tmp
 
 # junk is temporarily here:
 cd $build_dir
