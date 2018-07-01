@@ -9,8 +9,6 @@ set -o errexit    # always exit on error
 set -o pipefail   # don't ignore exit codes when piping output
 unset GIT_DIR     # Avoid GIT_DIR leak from previous build steps
 
-set +e
-
 ### Configure directories
 
 mkdir -p $1 $2 $3 # Ensure dirs are present
@@ -49,11 +47,16 @@ echo " ????????????????????????????????????????????????????????????????????????"
 
 aws=$AWS_INSTALL_DIR/bin/aws
 
-
+echo "aws: ${aws}"
+echo "S3_RELEASES_ROOT: ${S3_RELEASES_ROOT}"
 
 $aws s3 cp "${S3_RELEASES_ROOT}/half_dome/CURRENT_APP_VERSION" /tmp/CURRENT_APP_VERSION
 app_version=`cat /tmp/CURRENT_APP_VERSION`
+
+echo "app_version: ${app_version}"
 $aws s3 cp "${S3_RELEASES_ROOT}/half_dome/${app_version}/unix_linux/half_dome.tar.gz" /tmp
+
+echo "successfully downloaded tarball"
 
 # junk is temporarily here:
 cd $build_dir
