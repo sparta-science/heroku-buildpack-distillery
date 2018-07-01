@@ -24,40 +24,8 @@ distillery_app_name=half_dome
 s3_releases_root=s3://sparta-science
 
 export_env_dir $env_dir
-download_aws_cli $build_dir $cache_dir $build_pack_dir
-create_aws_credentials
+download_aws_cli $build_dir
+create_aws_credentials $AWS_KEY $AWS_SECRET_KEY $AWS_REGION
 download_distillery_release_from_s3 $distillery_app_name $s3_releases_root
 untar_distillery_release $distillery_app_name $build_dir
 
-#AWS_INSTALL_DIR=$build_dir/vendor/awscli
-#chmod +x $build_dir/vendor/awscli-bundle/install
-#$build_dir/vendor/awscli-bundle/install -i $AWS_INSTALL_DIR
-#chmod u+x $AWS_INSTALL_DIR/bin/aws
-#
-#echo " ????????????????????????????????????????????????????????????????????????"
-#
-#aws=$AWS_INSTALL_DIR/bin/aws
-#
-#echo "aws: ${aws}"
-#echo "S3_RELEASES_ROOT: ${S3_RELEASES_ROOT}"
-#S3_RELEASES_ROOT="s3://sparta-science"
-#
-#
-#
-
-
-
-#$aws s3 cp "${S3_RELEASES_ROOT}/half_dome/CURRENT_APP_VERSION" /tmp/CURRENT_APP_VERSION
-#app_version=`cat /tmp/CURRENT_APP_VERSION`
-#
-#echo "app_version: ${app_version}"
-#$aws s3 cp "${S3_RELEASES_ROOT}/half_dome/${app_version}/unix_linux/half_dome.tar.gz" /tmp
-#
-#echo "successfully downloaded tarball"
-
-# junk is temporarily here:
-#cd $build_dir
-#mkdir junk
-#cd junk
-#
-#tar xf /tmp/half_dome.tar.gz

@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-start_erl_path="$1/releases/start_erl.data"
 
 echo 'Distillery'
 exit 0
