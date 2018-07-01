@@ -68,6 +68,7 @@ EOF
 
 echo "AWS_KEY: ${AWS_KEY}"
 echo "AWS_REGION: ${AWS_REGION}"
+echo `printenv`
 
 
 $aws s3 cp "${S3_RELEASES_ROOT}/half_dome/CURRENT_APP_VERSION" /tmp/CURRENT_APP_VERSION
