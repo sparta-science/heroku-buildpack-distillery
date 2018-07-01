@@ -1,3 +1,4 @@
+# A boilerplate function copied from: https://devcenter.heroku.com/articles/buildpack-api
 export_env_dir() {
   env_dir=$1
   whitelist_regex=${2:-''}
@@ -17,7 +18,7 @@ download_aws_cli() {
   AWS_INSTALL_DIR=$build_dir/vendor/awscli
   AWS_CLI_URL="https://s3.amazonaws.com/aws-cli/awscli-bundle.zip"
 
-  echo "-----> Fetching AWS CLI into slug"
+  echo "-----> Fetching AWS CLI into slug ..."
   curl --progress-bar -o /tmp/awscli-bundle.zip $AWS_CLI_URL
   unzip -qq -d "$build_dir/vendor" /tmp/awscli-bundle.zip
 
@@ -51,7 +52,6 @@ EOF
 region = $aws_region
 EOF
   echo "-----> AWS credentials created"
-
 }
 
 download_distillery_release_from_s3() {
@@ -61,10 +61,10 @@ download_distillery_release_from_s3() {
   $aws s3 cp "${s3_releases_root}/${distillery_app_name}/CURRENT_APP_VERSION" /tmp/CURRENT_APP_VERSION
   app_version=`cat /tmp/CURRENT_APP_VERSION`
 
-  echo "app_version: ${app_version}"
+  echo "-----> app_version: ${app_version}"
   $aws s3 cp "${s3_releases_root}/${distillery_app_name}/${app_version}/unix_linux/${distillery_app_name}.tar.gz" /tmp
 
-  echo "successfully downloaded tarball"
+  echo "-----> Successfully downloaded version ${app_version} of ${distillery_app_name}.tar.gz"
 }
 
 untar_distillery_release() {
@@ -77,4 +77,5 @@ untar_distillery_release() {
   cd junk
 
   tar xf /tmp/${distillery_app_name}.tar.gz
+  echo "-----> Successfully untarred distillery application ${distillery_app_name}"
 }
