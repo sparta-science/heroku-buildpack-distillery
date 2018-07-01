@@ -39,17 +39,22 @@ echo `ls $build_dir/.profile.d`
 echo "vendor dir contents:"
 echo `ls $build_dir/vendor`
 
-$build_dir/.profile.d/install_awscli.sh
+AWS_INSTALL_DIR=$build_dir/vendor/awscli
+chmod +x $build_dir/vendor/awscli-bundle/install
+$build_dir/vendor/awscli-bundle/install -i $AWS_INSTALL_DIR
+chmod u+x $AWS_INSTALL_DIR/bin/aws
 
 echo " ????????????????????????????????????????????????????????????????????????"
 
-#aws s3 cp "${S3_RELEASES_ROOT}/half_dome/CURRENT_APP_VERSION" /tmp/CURRENT_APP_VERSION
-#app_version=`cat /tmp/CURRENT_APP_VERSION`
-#aws s3 cp "${S3_RELEASES_ROOT}/half_dome/${app_version}/unix_linux/half_dome.tar.gz" /tmp
-#
-## junk is temporarily here:
-#cd $build_dir
-#mkdir junk
-#cd junk
-#
-#tar xf /tmp/half_dome.tar.gz
+$aws=$AWS_INSTALL_DIR/bin/aws
+
+$aws s3 cp "${S3_RELEASES_ROOT}/half_dome/CURRENT_APP_VERSION" /tmp/CURRENT_APP_VERSION
+app_version=`cat /tmp/CURRENT_APP_VERSION`
+$aws s3 cp "${S3_RELEASES_ROOT}/half_dome/${app_version}/unix_linux/half_dome.tar.gz" /tmp
+
+# junk is temporarily here:
+cd $build_dir
+mkdir junk
+cd junk
+
+tar xf /tmp/half_dome.tar.gz
